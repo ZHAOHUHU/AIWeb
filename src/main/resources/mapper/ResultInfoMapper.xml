@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="shenzhen.teamway.mapper.ResultInfoMapper" >
+  <resultMap id="BaseResultMap" type="shenzhen.teamway.model.ResultInfo" >
+    <id column="result_id" property="resultId" jdbcType="INTEGER" />
+    <result column="task_type" property="taskType" jdbcType="INTEGER" />
+    <result column="camera_name" property="cameraName" jdbcType="CHAR" />
+    <result column="picture_path" property="picturePath" jdbcType="CHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="time" property="time" jdbcType="TIMESTAMP" />
+    <result column="detect_result" property="detectResult" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from result_info
+    where result_id = #{resultId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="shenzhen.teamway.model.ResultInfo" >
+    insert into result_info (result_id, task_type, camera_name, 
+      picture_path, status, time, 
+      detect_result)
+    values (#{resultId,jdbcType=INTEGER}, #{taskType,jdbcType=INTEGER}, #{cameraName,jdbcType=CHAR}, 
+      #{picturePath,jdbcType=CHAR}, #{status,jdbcType=INTEGER}, #{time,jdbcType=TIMESTAMP}, 
+      #{detectResult,jdbcType=LONGVARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="shenzhen.teamway.model.ResultInfo" >
+    update result_info
+    set task_type = #{taskType,jdbcType=INTEGER},
+      camera_name = #{cameraName,jdbcType=CHAR},
+      picture_path = #{picturePath,jdbcType=CHAR},
+      status = #{status,jdbcType=INTEGER},
+      time = #{time,jdbcType=TIMESTAMP},
+      detect_result = #{detectResult,jdbcType=LONGVARCHAR}
+    where result_id = #{resultId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select result_id, task_type, camera_name, picture_path, status, time, detect_result
+    from result_info
+    where result_id = #{resultId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select result_id, task_type, camera_name, picture_path, status, time, detect_result
+    from result_info
+  </select>
+  <select id="selectId" resultType="java.lang.Integer" >
+    select result_id, task_type, camera_name, picture_path, status, time, detect_result
+    from result_info
+  </select>
+</mapper>
