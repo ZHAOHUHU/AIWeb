@@ -28,7 +28,7 @@ public class ConnectionLinster implements ChannelFutureListener {
                 public void run() {
                     log.info("开始重连平台。");
                     //todo:重连的  IP和端口号
-                    client.connect("192.168.12.35",6666);
+                    client.connect("192.168.200.230",6666);
                    // 60秒重连一次
                 }
             }, 60L, TimeUnit.SECONDS);

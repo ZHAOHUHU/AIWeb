@@ -1,11 +1,10 @@
 package shenzhen.teamway.nettyTcp;
 
 import io.netty.channel.ChannelHandlerContext;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import shenzhen.teamway.model.ResultInfo;
+import org.slf4j.LoggerFactory;
+import shenzhen.teamway.model.Facedelect;
 import shenzhen.teamway.protocol.Message;
-import shenzhen.teamway.service.ResultInfoService;
+import shenzhen.teamway.protocol.MessageType;
 import shenzhen.teamway.service.imp.ResultInfoImp;
 import shenzhen.teamway.utils.ApplicationContextProviderUtils;
 import shenzhen.teamway.utils.OtherUtiis;
@@ -23,6 +22,7 @@ import java.util.concurrent.Executors;
  **/
 //@Component
 public class GetThread {
+    static org.slf4j.Logger log = LoggerFactory.getLogger(GetThread.class);
     ResultInfoImp resultInfoService = ApplicationContextProviderUtils.getBean(ResultInfoImp.class);
     private PullThread pull;
     private ChannelHandlerContext ctx;
@@ -52,18 +52,20 @@ public class GetThread {
             if (imgs.size() != 0) {
                 final File poll = imgs.poll();
                 //向数据库添加图片路径
-                final ResultInfo resultInfo = new ResultInfo();
-                resultInfo.setTaskType(2);
-                resultInfo.setPicturePath(poll.getAbsolutePath());
-                // resultInfoService.insertIntoResult(resultInfo);
-                // final int id = resultInfoService.getId();
-                final int id = 3;
+                final Facedelect f = new Facedelect();
+                f.setFilepath(poll.getAbsolutePath());
+                final int face = resultInfoService.insertFace(f);
+                if (face > 0) {
+                    log.info("插入数据库的条数成功+" + face + "条");
+                } else {
+                    log.error("插入数据库失败");
+                }
+                final int id = resultInfoService.getId();
                 final byte[] image2byte = OtherUtiis.image2byte(poll);
                 int i = image2byte.length;
                 byte a = 1;
                 byte b = 10;
-                //  final Message message = new Message(a, b, 1, 26 + i, id + 1, i, image2byte);
-                final Message message = new Message(a, b, 1, 26 + i, id + 1, 0, 0, i, image2byte);
+                final Message message = new Message(a, b, MessageType.faceRequest, 26 + i, id + 1, i, image2byte);
                 ctx.channel().writeAndFlush(message);
             } else {
                 try {

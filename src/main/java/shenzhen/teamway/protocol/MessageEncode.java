@@ -19,8 +19,6 @@ public class MessageEncode extends MessageToByteEncoder<Message> {
         b.writeBytes(OtherUtiis.toLH(m.getRequestType()));
         b.writeBytes(OtherUtiis.toLH(m.getTotalLength()));
         b.writeBytes(OtherUtiis.toLH(m.getTaskId()));
-        b.writeBytes(OtherUtiis.toLH(m.getWidth()));
-        b.writeBytes(OtherUtiis.toLH(m.getHigh()));
         b.writeBytes(OtherUtiis.toLH(m.getBodyLength()));
         b.writeBytes(m.getMessageBody());
 

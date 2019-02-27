@@ -122,6 +122,7 @@ public class FTPUtils {
         if (b) {
             log.debug("移动文件成功");
             //todo:文件的新路径         newFile.getAbsolutePath());       //todo：插入数据库的图片路径
+
             return newFile;
         } else {
             log.error("移动文件失败");

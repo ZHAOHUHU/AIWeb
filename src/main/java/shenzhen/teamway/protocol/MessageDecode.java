@@ -21,34 +21,33 @@ public class MessageDecode extends ByteToMessageDecoder {
 
     @Override
     protected void decode(ChannelHandlerContext channelHandlerContext, ByteBuf in, List<Object> list) throws Exception {
-        log.debug("decode可以收到请求但是可说不准能解析");
+        int taskId = 0;
+        int bodylen = 0;
+        byte[] temp = new byte[0];
         if (in.readableBytes() < mixByte) {
             log.error("字节长度不够");
         } else {
+
             final byte[] b = new byte[4];
+
+
             final byte head = in.readByte();
             final byte headLngth = in.readByte();
-            //final int type = in.readInt();
-            //final int totalLngth = in.readInt();
-            //final int taskId = in.readInt();
-            //final int width = in.readInt();
-            //final int height = in.readInt();
-            //final int bodylen = in.readInt();
             in.readBytes(b);
             final int type = OtherUtiis.bytesToIntBig(b);
             in.readBytes(b);
             final int totalLngth = OtherUtiis.bytesToIntBig(b);
-            in.readBytes(b);
-            final int taskId = OtherUtiis.bytesToIntBig(b);
-            in.readBytes(b);
-            final int width = OtherUtiis.bytesToIntBig(b);
-            in.readBytes(b);
-            final int height = OtherUtiis.bytesToIntBig(b);
-            in.readBytes(b);
-            final int bodylen = OtherUtiis.bytesToIntBig(b);
-            final byte[] temp = new byte[bodylen];
-            in.readBytes(temp);
-            final Message message = new Message(head, headLngth, type, totalLngth, taskId, width, height, bodylen, temp);
+            if (type == MessageType.heartbeat) {
+                Message message = new Message(head, headLngth, type, totalLngth, taskId, bodylen, temp);
+            } else {
+                in.readBytes(b);
+                taskId = OtherUtiis.bytesToIntBig(b);
+                in.readBytes(b);
+                bodylen = OtherUtiis.bytesToIntBig(b);
+                temp = new byte[bodylen];
+                in.readBytes(temp);
+            }
+            Message message = new Message(head, headLngth, type, totalLngth, taskId, bodylen, temp);
             list.add(message);
         }
     }

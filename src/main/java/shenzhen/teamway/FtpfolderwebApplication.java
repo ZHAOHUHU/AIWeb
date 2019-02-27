@@ -19,7 +19,7 @@ NettyClient nettyClient;
 
     @Override
     public void run(String... args) throws Exception {
-        nettyClient.connect("192.168.12.35", 6666);
+        nettyClient.connect("192.168.200.239", 6666);
         System.out.println();
     }
 }

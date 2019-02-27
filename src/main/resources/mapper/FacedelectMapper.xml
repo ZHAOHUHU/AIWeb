@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="shenzhen.teamway.mapper.FacedelectMapper">
+    <resultMap id="BaseResultMap" type="shenzhen.teamway.model.Facedelect">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="filepath" property="filepath" jdbcType="VARCHAR"/>
+        <result column="result" property="result" jdbcType="VARCHAR"/>
+        <result column="up" property="up" jdbcType="VARCHAR"/>
+        <result column="facetime" property="facetime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from facedelect
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="shenzhen.teamway.model.Facedelect">
+        <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into facedelect (filepath, result, up,
+        facetime)
+        values (#{filepath,jdbcType=VARCHAR}, #{result,jdbcType=VARCHAR}, #{up,jdbcType=VARCHAR},
+        #{facetime,jdbcType=TIMESTAMP})
+    </insert>
+    <update id="updateByPrimaryKey" parameterType="shenzhen.teamway.model.Facedelect">
+    update facedelect
+    set filepath = #{filepath,jdbcType=VARCHAR},
+      result = #{result,jdbcType=VARCHAR},
+      up = #{up,jdbcType=VARCHAR},
+      facetime = #{facetime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select id, filepath, result, up, facetime
+    from facedelect
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+    select id, filepath, result, up, facetime
+    from facedelect
+  </select>
+    <select id="selectId" resultType="java.lang.Integer">
+    select last_insert_id() as id
+  </select>
+</mapper>

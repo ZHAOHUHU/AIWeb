@@ -1,5 +1,7 @@
 package shenzhen.teamway.utils;
 
+import shenzhen.teamway.jsonResult.FaceResult;
+
 import javax.imageio.stream.FileImageInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -56,16 +58,25 @@ public class OtherUtiis {
      * @return: byte[]
      */
 
-    public static int bytesToIntBig(byte[] bytes){
-        int result = 0;
-        if(bytes.length == 4){
-            int a = (bytes[0] & 0xff) << 24;//说明二
-            int b = (bytes[1] & 0xff) << 16;
-            int c = (bytes[2] & 0xff) << 8;
-            int d = (bytes[3] & 0xff);
-            result = a | b | c | d;
-        }
-        return result;
+    //public static int bytesToIntBig(byte[] bytes){
+    //    int result = 0;
+    //    if(bytes.length == 4){
+    //        int a = (bytes[0] & 0xff) << 24;//说明二
+    //        int b = (bytes[1] & 0xff) << 16;
+    //        int c = (bytes[2] & 0xff) << 8;
+    //        int d = (bytes[3] & 0xff);
+    //        result = a | b | c | d;
+    //    }
+    //    return result;
+    //}
+    public static int bytesToIntBig(byte[] src) {
+        int offset=0;
+        int value;
+        value = (int) (((src[offset] & 0xFF) )
+                | ((src[offset + 1] & 0xFF) <<8)
+                | ((src[offset + 2] & 0xFF) <<16)
+                | (src[offset + 3] & 0xFF)<<24);
+        return value;
     }
 
 
@@ -98,5 +109,11 @@ public class OtherUtiis {
         return data;
     }
 
+    public static void main(String[] args) {
+        String s="{}";
+        System.out.println(s.length());
+        final FaceResult result = Json2Person.getResult(s);
+        System.out.println(result.toString());
+    }
 
 }

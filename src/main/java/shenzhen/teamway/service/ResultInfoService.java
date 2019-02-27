@@ -1,5 +1,8 @@
 package shenzhen.teamway.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import shenzhen.teamway.mapper.FacedelectMapper;
+import shenzhen.teamway.model.Facedelect;
 import shenzhen.teamway.model.ResultInfo;
 
 /**
@@ -10,8 +13,7 @@ import shenzhen.teamway.model.ResultInfo;
  **/
 public interface ResultInfoService {
 
+    int insertFace(Facedelect facedelect);
 
-     int insertIntoResult(ResultInfo r);
-
-  int   getId();
+    int getId();
 }

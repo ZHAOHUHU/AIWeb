@@ -16,9 +16,10 @@ public class Message implements Serializable {
     private byte headLength = 10;
     private int requestType;
     private int totalLength;
+    ///////////////////////////
+
     private int taskId;
-    private int width=0;
-    private int high=0;
+
     private int bodyLength;
     private byte[] messageBody;
 
@@ -58,21 +59,6 @@ public class Message implements Serializable {
         this.totalLength = totalLength;
     }
 
-    public int getWidth() {
-        return width;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    public int getHigh() {
-        return high;
-    }
-
-    public void setHigh(int high) {
-        this.high = high;
-    }
 
     public byte[] getMessageBody() {
         return messageBody;
@@ -98,14 +84,13 @@ public class Message implements Serializable {
         this.bodyLength = bodyLength;
     }
 
-    public Message(byte head, byte headLength, int requestType, int totalLength, int taskId, int width, int high, int bodyLength, byte[] messageBody) {
+    public Message(byte head, byte headLength, int requestType, int totalLength, int taskId,  int bodyLength, byte[] messageBody) {
         this.head = head;
         this.headLength = headLength;
         this.requestType = requestType;
         this.totalLength = totalLength;
         this.taskId = taskId;
-        this.width = width;
-        this.high = high;
+
         this.bodyLength = bodyLength;
         this.messageBody = messageBody;
     }

@@ -5,7 +5,11 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import shenzhen.teamway.jsonResult.FaceResult;
+import shenzhen.teamway.model.Facedelect;
 import shenzhen.teamway.protocol.Message;
+import shenzhen.teamway.protocol.MessageType;
+import shenzhen.teamway.utils.Json2Person;
 
 /**
  * @program: NettyServer
@@ -18,7 +22,6 @@ public class NettyClientSSLHandler extends SimpleChannelInboundHandler<Message> 
     GetThread getThread;
     PullThread pullThread;
 
-    //todo:从队列拿图片
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         pullThread = new PullThread();
@@ -29,10 +32,26 @@ public class NettyClientSSLHandler extends SimpleChannelInboundHandler<Message> 
 
     @Override
     protected void messageReceived(ChannelHandlerContext ctx, Message m) throws Exception {
+        byte a = 1;
+        byte b = 10;
         System.out.println(m.toString());
-        final byte[] messageBody = m.getMessageBody();
-        final int taskId = m.getTaskId();
-        //todo 把他俩存数据库
+        final int requestType = m.getRequestType();
+        if (requestType == MessageType.heartbeat) {
+            ctx.channel().writeAndFlush(new Message(a, b, MessageType.heartbeat, 10, 0, 0, new byte[0]));
+        } else {
+            final byte[] messageBody = m.getMessageBody();
+            final int taskId = m.getTaskId();
+            final String s = new String(messageBody);
+            if (s.length()==2){
+
+            }
+            System.out.println("收到的消息结果是" + s);
+            //todo:返回空集合怎么处理  识别不出来的人
+            final FaceResult result = Json2Person.getResult(s);
+            System.out.println(result.toString());
+            //todo 把他俩存数据库
+
+        }
     }
 
     @Override
