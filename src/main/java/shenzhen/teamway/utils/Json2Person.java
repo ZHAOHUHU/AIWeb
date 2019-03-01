@@ -2,6 +2,7 @@ package shenzhen.teamway.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import shenzhen.teamway.jsonResult.FaceResult;
 import shenzhen.teamway.model.Facedelect;
 
@@ -13,10 +14,14 @@ import java.io.IOException;
  * @author: Zhao Hong Ning
  * @create: 2019-02-27 16:18
  **/
+@Component
 public class Json2Person {
     static org.slf4j.Logger log = LoggerFactory.getLogger(Json2Person.class);
 
     public static FaceResult getResult(String s) {
+        if (s.length() == 2) {
+            return null;
+        }
         final String substring = s.substring(1, s.length() - 1);
         final ObjectMapper mapper = new ObjectMapper();
         try {

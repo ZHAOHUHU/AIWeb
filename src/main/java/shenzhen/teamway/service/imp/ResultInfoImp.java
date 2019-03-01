@@ -3,9 +3,7 @@ package shenzhen.teamway.service.imp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import shenzhen.teamway.mapper.FacedelectMapper;
-import shenzhen.teamway.mapper.ResultInfoMapper;
 import shenzhen.teamway.model.Facedelect;
-import shenzhen.teamway.model.ResultInfo;
 import shenzhen.teamway.service.ResultInfoService;
 
 /**
@@ -30,9 +28,25 @@ public class ResultInfoImp implements ResultInfoService {
     public int insertFace(Facedelect facedelect) {
         return facedelectMapper.insert(facedelect);
     }
-
+   /**
+    * @Author: Zhao Hong Ning
+    * @Description:获取当前插入的最大id
+    * @Date:  2019/2/28 
+    * @param:  
+    * @return: int
+   */
     @Override
     public int getId() {
         return facedelectMapper.selectId();
+    }
+
+    @Override
+    public int getCountById(int id) {
+        return facedelectMapper.selectById(id);
+    }
+
+    @Override
+    public int updateResult(Facedelect facedelect) {
+        return facedelectMapper.updataResult(facedelect);
     }
 }

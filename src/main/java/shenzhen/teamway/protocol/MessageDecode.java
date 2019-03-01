@@ -26,6 +26,7 @@ public class MessageDecode extends ByteToMessageDecoder {
         byte[] temp = new byte[0];
         if (in.readableBytes() < mixByte) {
             log.error("字节长度不够");
+            in.resetReaderIndex();
         } else {
 
             final byte[] b = new byte[4];

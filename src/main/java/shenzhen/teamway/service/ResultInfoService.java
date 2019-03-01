@@ -16,4 +16,8 @@ public interface ResultInfoService {
     int insertFace(Facedelect facedelect);
 
     int getId();
+
+    int getCountById(int id);
+
+    int updateResult(Facedelect facedelect);
 }

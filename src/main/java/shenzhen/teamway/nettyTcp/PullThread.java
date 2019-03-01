@@ -45,7 +45,7 @@ public class PullThread {
      * @return: void
      */
     public void execute(ChannelHandlerContext ctx, int type) {
-        log.debug("delay 3 seconds");
+        System.out.println("xunhuan");
         final List<File> files = FTPUtils.getFiles(path);
         final List<File> fileSortName = FTPUtils.getFileSort(files);
         for (File file : fileSortName) {

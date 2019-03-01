@@ -20,8 +20,8 @@ public class DataUtil {
     }
 
     public static void main(String[] args) {
-        final LocalDateTime now = LocalDateTime.now();
-        System.out.println(now);
+        final byte[] bytes = OtherUtiis.toLH(2);
+        System.out.println(bytes.length);
     }
 
 }

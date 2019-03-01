@@ -65,7 +65,7 @@ public class GetThread {
                 int i = image2byte.length;
                 byte a = 1;
                 byte b = 10;
-                final Message message = new Message(a, b, MessageType.faceRequest, 26 + i, id + 1, i, image2byte);
+                final Message message = new Message(a, b, MessageType.faceRequest, 18 + i, id , i, image2byte);
                 ctx.channel().writeAndFlush(message);
             } else {
                 try {

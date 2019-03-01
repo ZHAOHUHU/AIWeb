@@ -1,6 +1,7 @@
 package shenzhen.teamway.mapper;
 
 import java.util.List;
+
 import shenzhen.teamway.model.Facedelect;
 
 public interface FacedelectMapper {
@@ -13,5 +14,10 @@ public interface FacedelectMapper {
     List<Facedelect> selectAll();
 
     int updateByPrimaryKey(Facedelect record);
+
     int selectId();
+
+    int selectById(Integer id);
+
+    int updataResult(Facedelect result);
 }

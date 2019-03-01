@@ -6,12 +6,13 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import shenzhen.teamway.nettyTcp.NettyClient;
+import shenzhen.teamway.service.ResultInfoService;
 
 @SpringBootApplication
 @MapperScan("shenzhen.teamway.mapper")
 public class FtpfolderwebApplication implements CommandLineRunner {
-@Autowired
-NettyClient nettyClient;
+    @Autowired
+    NettyClient nettyClient;
 
     public static void main(String[] args) {
         SpringApplication.run(FtpfolderwebApplication.class, args);
@@ -20,6 +21,5 @@ NettyClient nettyClient;
     @Override
     public void run(String... args) throws Exception {
         nettyClient.connect("192.168.200.239", 6666);
-        System.out.println();
     }
 }

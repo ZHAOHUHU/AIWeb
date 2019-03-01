@@ -29,6 +29,13 @@
       facetime = #{facetime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+    <update id="updataResult" parameterType="shenzhen.teamway.model.Facedelect">
+    update facedelect
+    set
+      result = #{result,jdbcType=VARCHAR}
+
+    where id = #{id,jdbcType=INTEGER}
+  </update>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
     select id, filepath, result, up, facetime
     from facedelect
@@ -38,7 +45,12 @@
     select id, filepath, result, up, facetime
     from facedelect
   </select>
+
     <select id="selectId" resultType="java.lang.Integer">
-    select last_insert_id() as id
+    select max(id) from facedelect
+  </select>
+
+    <select id="selectById" resultType="java.lang.Integer">
+  select COUNT(*) from facedelect where id=#{id}
   </select>
 </mapper>
