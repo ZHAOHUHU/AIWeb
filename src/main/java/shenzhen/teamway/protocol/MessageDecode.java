@@ -23,15 +23,14 @@ public class MessageDecode extends ByteToMessageDecoder {
     protected void decode(ChannelHandlerContext channelHandlerContext, ByteBuf in, List<Object> list) throws Exception {
         int taskId = 0;
         int bodylen = 0;
+        int isSuccess = 0;//0成功  -1模型不存在
         byte[] temp = new byte[0];
+        Message message = null;
         if (in.readableBytes() < mixByte) {
             log.error("字节长度不够");
             in.resetReaderIndex();
         } else {
-
             final byte[] b = new byte[4];
-
-
             final byte head = in.readByte();
             final byte headLngth = in.readByte();
             in.readBytes(b);
@@ -39,16 +38,22 @@ public class MessageDecode extends ByteToMessageDecoder {
             in.readBytes(b);
             final int totalLngth = OtherUtiis.bytesToIntBig(b);
             if (type == MessageType.heartbeat) {
-                Message message = new Message(head, headLngth, type, totalLngth, taskId, bodylen, temp);
+                message = new Message(head, headLngth, type, totalLngth, taskId, bodylen, temp);
             } else {
                 in.readBytes(b);
                 taskId = OtherUtiis.bytesToIntBig(b);
                 in.readBytes(b);
+                isSuccess = OtherUtiis.bytesToIntBig(b);
+
+                in.readBytes(b);
                 bodylen = OtherUtiis.bytesToIntBig(b);
+                if (isSuccess == -1 && bodylen == 0) {
+                    log.error("模型不存在");
+                }
                 temp = new byte[bodylen];
                 in.readBytes(temp);
+                message = new Message(head, headLngth, type, totalLngth, taskId, bodylen, temp);
             }
-            Message message = new Message(head, headLngth, type, totalLngth, taskId, bodylen, temp);
             list.add(message);
         }
     }

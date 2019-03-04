@@ -26,6 +26,8 @@ public class Bear {
 
 
     public static void main(String[] args) {
-        new ResultInfoImp().getId();
+        final byte[] bytes = new byte[0];
+        final String s = new String(bytes);
+        System.out.println(s.length()+"/"+s);
     }
 }

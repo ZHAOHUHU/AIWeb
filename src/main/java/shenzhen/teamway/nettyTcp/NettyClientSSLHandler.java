@@ -12,7 +12,6 @@ import shenzhen.teamway.model.Facedelect;
 import shenzhen.teamway.protocol.Message;
 import shenzhen.teamway.protocol.MessageType;
 import shenzhen.teamway.service.ResultInfoService;
-import shenzhen.teamway.utils.Json2Person;
 
 /**
  * @program: NettyServer
@@ -41,6 +40,7 @@ public class NettyClientSSLHandler extends SimpleChannelInboundHandler<Message> 
         byte a = 1;
         byte b = 10;
         FaceResult result = null;
+        String s = null;
         final int requestType = m.getRequestType();
         if (requestType == MessageType.heartbeat) {
             log.info("收到心跳");
@@ -48,11 +48,12 @@ public class NettyClientSSLHandler extends SimpleChannelInboundHandler<Message> 
         } else {
             final Facedelect f = new Facedelect();
             final byte[] messageBody = m.getMessageBody();
-
-            final String s = new String(messageBody);
             final int taskId = m.getTaskId();
-            if (s.length()==2){
-                log.error("收到的图片id是" + taskId + "收到的消息结果是" + s);
+            if (messageBody.length != 0) {
+                log.info("收到的图片id是" + taskId + "收到的消息结果是" + s);
+                s = new String(messageBody);
+            } else {
+                log.error("收到的图片id是" + taskId + "模型解析不存在");
             }
             f.setResult(s);
             f.setId(taskId);
@@ -61,12 +62,10 @@ public class NettyClientSSLHandler extends SimpleChannelInboundHandler<Message> 
                 log.error("根据id查询的结果不存在或者不唯一");
             } else {
                 final int i = resultInfoService.updateResult(f);
-                log.info("成功更新了"+i+"条数据");
+                log.info("成功更新了" + i + "条数据");
             }
 
             log.debug("收到的图片id是" + taskId + "收到的消息结果是" + s);
-
-
 
 
         }
@@ -74,7 +73,15 @@ public class NettyClientSSLHandler extends SimpleChannelInboundHandler<Message> 
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-
+        log.error("连接断开");
+        if (pullThread != null && pullThread.service != null) {
+            pullThread.service.shutdown();
+            log.info("pullThread线程终止");
+        }
+        if (getThread != null && getThread.fixedThreadPool != null) {
+            getThread.fixedThreadPool.shutdown();
+            log.info("getThread线程终止");
+        }
 
     }
 

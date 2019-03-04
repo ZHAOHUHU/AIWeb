@@ -51,7 +51,6 @@ public class NettyClient {
                         }
                     });
 
-            // channel = strap.connect(ip, port).sync().channel();
 
             //同步变成异步操作不等待直接返回一个channelFuture，然后触发linster
             final ChannelFuture future = strap.connect(ip, port);
