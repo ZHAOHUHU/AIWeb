@@ -45,13 +45,15 @@ public class NettyClientSSLHandler extends SimpleChannelInboundHandler<Message> 
         if (requestType == MessageType.heartbeat) {
             log.info("收到心跳");
             ctx.channel().writeAndFlush(new Message(a, b, MessageType.heartbeat, 10, 0, 0, new byte[0]));
-        } else {
+        }
+        //判断
+        else {
             final Facedelect f = new Facedelect();
             final byte[] messageBody = m.getMessageBody();
             final int taskId = m.getTaskId();
             if (messageBody.length != 0) {
                 log.info("收到的图片id是" + taskId + "收到的消息结果是" + s);
-                s = new String(messageBody);
+                s = new String(messageBody, "utf-8");
             } else {
                 log.error("收到的图片id是" + taskId + "模型解析不存在");
             }

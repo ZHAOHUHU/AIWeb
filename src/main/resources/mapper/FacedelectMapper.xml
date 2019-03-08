@@ -12,10 +12,8 @@
     delete from facedelect
     where id = #{id,jdbcType=INTEGER}
   </delete>
-    <insert id="insert" parameterType="shenzhen.teamway.model.Facedelect">
-        <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
-            SELECT LAST_INSERT_ID()
-        </selectKey>
+    <insert id="insert" parameterType="shenzhen.teamway.model.Facedelect" useGeneratedKeys="true" keyProperty="id" >
+
         insert into facedelect (filepath, result, up,
         facetime)
         values (#{filepath,jdbcType=VARCHAR}, #{result,jdbcType=VARCHAR}, #{up,jdbcType=VARCHAR},

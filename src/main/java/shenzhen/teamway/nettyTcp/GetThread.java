@@ -60,12 +60,13 @@ public class GetThread {
                 } else {
                     log.error("插入数据库失败");
                 }
-                final int id = resultInfoService.getId();
+                final int id = f.getId();
                 final byte[] image2byte = OtherUtiis.image2byte(poll);
                 int i = image2byte.length;
                 byte a = 1;
                 byte b = 10;
-                final Message message = new Message(a, b, MessageType.faceRequest, 18 + i, id , i, image2byte);
+                //id对应问题
+                final Message message = new Message(a, b, MessageType.faceRequest, 18 + i, id, i, image2byte);
                 ctx.channel().writeAndFlush(message);
             } else {
                 try {

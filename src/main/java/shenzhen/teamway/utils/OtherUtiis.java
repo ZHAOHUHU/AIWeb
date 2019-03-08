@@ -15,7 +15,8 @@ import java.io.IOException;
  * @create: 2019-02-23 15:15
  **/
 public class OtherUtiis {
-    public static boolean checkingSucess(File file) {
+    public static boolean checkingSucess1(File file) {
+        file.canRead();
         long o1 = 0;
         long o2 = 0;
         while (true) {
@@ -32,6 +33,17 @@ public class OtherUtiis {
             }
         }
 
+    }
+
+    public static boolean checkingSucess(File file) {
+        boolean b = false;
+        for (int i = 0; i < 5; i++) {
+            b = file.renameTo(file);
+            if (b) {
+                break;
+            }
+        }
+        return b;
     }
 
     /**
@@ -70,12 +82,12 @@ public class OtherUtiis {
     //    return result;
     //}
     public static int bytesToIntBig(byte[] src) {
-        int offset=0;
+        int offset = 0;
         int value;
-        value = (int) (((src[offset] & 0xFF) )
-                | ((src[offset + 1] & 0xFF) <<8)
-                | ((src[offset + 2] & 0xFF) <<16)
-                | (src[offset + 3] & 0xFF)<<24);
+        value = (int) (((src[offset] & 0xFF))
+                | ((src[offset + 1] & 0xFF) << 8)
+                | ((src[offset + 2] & 0xFF) << 16)
+                | (src[offset + 3] & 0xFF) << 24);
         return value;
     }
 
@@ -110,10 +122,10 @@ public class OtherUtiis {
     }
 
     public static void main(String[] args) {
-        String s="{}";
-        System.out.println(s.length());
-        final FaceResult result = Json2Person.getResult(s);
-        System.out.println(result.toString());
+        final File file = new File("F:\\aa\\20190223\\cc.pdf");
+        final boolean b = OtherUtiis.checkingSucess1(file);
+        System.out.println(b);
+
     }
 
 }

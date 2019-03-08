@@ -20,10 +20,10 @@ public class FtpfolderwebApplicationTests {
     @Test
     public void contextLoads() {
         final Facedelect f = new Facedelect();
-        f.setId(28);
+        f.setFilepath("asdfsdagfdsgfdsgsgsgsg");
         f.setResult("ojbk");
-        final int id = resultInfoService.updateResult(f);
-        System.out.println(id);
+        final int id = resultInfoService.insertFace(f);
+        System.out.println("返回值是多少啊啊============"+f.getId());
     }
 
     @Test

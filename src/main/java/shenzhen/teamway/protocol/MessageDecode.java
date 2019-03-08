@@ -28,15 +28,20 @@ public class MessageDecode extends ByteToMessageDecoder {
         Message message = null;
         if (in.readableBytes() < mixByte) {
             log.error("字节长度不够");
+            return;
+        }
+        in.markReaderIndex();
+        //收到的大小和头的信息做比对
+        final byte[] b = new byte[4];
+        final byte head = in.readByte();
+        final byte headLngth = in.readByte();
+        in.readBytes(b);
+        final int type = OtherUtiis.bytesToIntBig(b);
+        in.readBytes(b);
+        final int totalLngth = OtherUtiis.bytesToIntBig(b);
+        if (in.readableBytes() < totalLngth - 10) {
             in.resetReaderIndex();
         } else {
-            final byte[] b = new byte[4];
-            final byte head = in.readByte();
-            final byte headLngth = in.readByte();
-            in.readBytes(b);
-            final int type = OtherUtiis.bytesToIntBig(b);
-            in.readBytes(b);
-            final int totalLngth = OtherUtiis.bytesToIntBig(b);
             if (type == MessageType.heartbeat) {
                 message = new Message(head, headLngth, type, totalLngth, taskId, bodylen, temp);
             } else {
@@ -54,7 +59,7 @@ public class MessageDecode extends ByteToMessageDecoder {
                 in.readBytes(temp);
                 message = new Message(head, headLngth, type, totalLngth, taskId, bodylen, temp);
             }
-            list.add(message);
         }
+        list.add(message);
     }
 }

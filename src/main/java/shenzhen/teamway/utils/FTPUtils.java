@@ -67,6 +67,7 @@ public class FTPUtils {
                 }
             }
         });
+        //重命名
         while (true) {
             final boolean b = OtherUtiis.checkingSucess(files.get(files.size() - 1));
             if (b) {
